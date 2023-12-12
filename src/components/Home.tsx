@@ -18,6 +18,22 @@ const Home = () => {
     setIsLoading(false)
   }, [])
 
+  const getMatchesByGroup = (matches: MatchInfo[]) => {
+    const groupedMatches: Record<number, MatchInfo[]> = {}
+    matches.forEach((match) => {
+      const roundNumber = match.round
+
+      if (!groupedMatches[roundNumber]) {
+        groupedMatches[roundNumber] = []
+      }
+
+      groupedMatches[roundNumber].push(match)
+    })
+    return groupedMatches
+  }
+
+  const groupedMatches = getMatchesByGroup(matches)
+
   return (
     <div className="flex flex-col max-w-6xl w-full rounded-2xl shadow-xl bg-white mt-4">
       <div className="p-4">
@@ -39,6 +55,9 @@ const Home = () => {
           </div>
         </Link>
       </div>
+      {Object.keys(groupedMatches).map((roundNumber) => (
+        <p>{roundNumber}</p>
+      ))}
     </div>
   )
 }
