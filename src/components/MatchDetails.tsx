@@ -6,11 +6,17 @@ interface MatchDetailsProps {
 }
 
 const MatchDetails = ({ details }: MatchDetailsProps) => {
+  const formatDateString = (inputDateString: string) => {
+    const [year, month, day] = inputDateString.split("-")
+    const formattedDateString = `${day}-${month}-${year}`
+    return formattedDateString
+  }
+
   return (
     <div className="p-4 flex justify-between items-center w-full border-b border-b-gray-200 last:border-b-0 gap-16">
       <div className="flex gap-8 items-center max-w-2xl w-full">
         <div className="font-normal text-base leading-4 opacity-50">
-          {details.date}
+          {formatDateString(details.date)}
         </div>
         <div className="flex flex-col gap-2 border-l-2 border-l-[#61AEE4] px-2">
           <div className="flex gap-3">

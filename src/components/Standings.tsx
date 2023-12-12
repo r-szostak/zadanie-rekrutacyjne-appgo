@@ -10,9 +10,23 @@ const Standings = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch("https://php74.appgo.pl/sport_api/api/public/api/table")
-      .then((response) => response.json())
-      .then((data) => setStandings(data))
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://php74.appgo.pl/sport_api/api/public/api/table"
+        )
+
+        const data = await response.json()
+
+        setStandings(data)
+        setIsLoading(false)
+      } catch (error) {
+        setIsLoading(false)
+        throw new Error("Error fetching data.")
+      }
+    }
+
+    fetchData()
   }, [])
 
   return (

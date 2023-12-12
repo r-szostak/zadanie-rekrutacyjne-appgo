@@ -10,13 +10,27 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch(
-      "https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=5&orderDirection=desc&orderBy=round"
-    )
-      .then((response) => response.json())
-      .then((data) => setMatches(data.data))
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://php74.appgo.pl/sport_api/api/public/api/games?page=1&onPage=30&orderDirection=desc&orderBy=round"
+        )
 
-    setIsLoading(false)
+        const data = await response.json()
+
+        const sortedMatches = data.data.sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        )
+
+        setMatches(sortedMatches)
+        setIsLoading(false)
+      } catch (error) {
+        setIsLoading(false)
+        throw new Error("Error fetching data.")
+      }
+    }
+
+    fetchData()
   }, [])
 
   const getMatchesByGroup = (matches: MatchInfo[]) => {
@@ -43,7 +57,7 @@ const Home = () => {
         </button>
       </div>
       <div className="flex justify-between p-4 border-y border-t-gray-200 border-b-gray-200">
-        <div className="flex gap-4">
+        <div className="flex gap-4  flex-1">
           <img src={EnglandFlag} alt="Flag of England" />
           <p className="font-medium text-xl leading-5">
             Anglia: Premier League
