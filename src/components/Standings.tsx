@@ -29,6 +29,18 @@ const Standings = () => {
     fetchData()
   }, [])
 
+  const getPositionBackgroundColor = (index: number) => {
+    if (index + 1 < 5) {
+      return "bg-[#1C336C]"
+    } else if (index + 1 < 6) {
+      return "bg-[#C82D2D]"
+    } else if (index + 1 < 18) {
+      return "bg-[#a7a7a7]"
+    } else {
+      return "bg-[#ff5f5f]"
+    }
+  }
+
   return (
     <>
       {isLoading ? (
@@ -37,7 +49,7 @@ const Standings = () => {
         </div>
       ) : (
         <>
-          <div className="w-full bg-[#eeeff2] py-[10px] px-12">
+          <div className="w-full bg-[#eeeff2] py-[10px] px-12 mt-[104px]">
             <div className="flex gap-4">
               <p className="font-medium text-base leading-4">Piłka nożna</p>
               <img src={ChevronRight} alt="Right chevron" />
@@ -111,15 +123,9 @@ const Standings = () => {
                       <tr className="w-full border-b border-b-gray-200">
                         <td className={"font-semibold pl-4 py-4 "}>
                           <p
-                            className={`flex justify-center items-center rounded-md font-semibold w-6 h-6 text-white ${
-                              index + 1 < 5
-                                ? "bg-[#1C336C]"
-                                : index + 1 < 6
-                                ? "bg-[#C82D2D]"
-                                : index + 1 < 18
-                                ? "bg-[#a7a7a7]"
-                                : "bg-[#ff5f5f]"
-                            }`}
+                            className={`flex justify-center items-center rounded-md font-semibold w-6 h-6 text-white ${getPositionBackgroundColor(
+                              index
+                            )}`}
                           >
                             {index + 1}
                           </p>

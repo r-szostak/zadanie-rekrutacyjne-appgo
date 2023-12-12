@@ -8,7 +8,7 @@ interface RoundDetailsProps {
 
 const RoundDetails = ({ roundNumber, details }: RoundDetailsProps) => {
   return (
-    <div className="pt-4 px-4">
+    <div className="p-4">
       <div className="uppercase bg-[#EAEBED] rounded font-medium text-xs leading-3 py-2 px-4">
         runda {roundNumber}
       </div>

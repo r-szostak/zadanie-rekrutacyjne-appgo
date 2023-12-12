@@ -21,9 +21,12 @@ const Home = () => {
 
         const data = await response.json()
 
-        const sortedMatches = data.data.sort(
-          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-        )
+        const sortedMatches = data.data.sort((a: MatchInfo, b: MatchInfo) => {
+          const dateA = new Date(a.date).getTime()
+          const dateB = new Date(b.date).getTime()
+
+          return dateA - dateB
+        })
 
         setMatches(sortedMatches)
         setIsLoading(false)
@@ -59,7 +62,7 @@ const Home = () => {
           Loading...
         </div>
       ) : (
-        <div className="flex flex-col max-w-6xl w-full rounded-2xl shadow-xl bg-white mt-4 mb-16">
+        <div className="flex flex-col max-w-6xl w-full rounded-2xl shadow-xl bg-white mt-32 mb-16">
           <div className="p-4">
             <button className="py-4 px-5 text-white text-base leading-4 font-medium bg-[#1C336c] rounded-lg">
               Wszystkie
