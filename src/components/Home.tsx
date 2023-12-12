@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
 import { MatchInfo } from "../types"
+import EnglandFlag from "../assets/england-flag.png"
+import { Link } from "react-router-dom"
+import ArrowRight from "../assets/arrow-right-circle.png"
 
 const Home = () => {
   const [matches, setMatches] = useState<MatchInfo[]>([])
@@ -15,7 +18,29 @@ const Home = () => {
     setIsLoading(false)
   }, [])
 
-  return <div>Home</div>
+  return (
+    <div className="flex flex-col max-w-6xl w-full rounded-2xl shadow-xl bg-white mt-4">
+      <div className="p-4">
+        <button className="py-4 px-5 text-white text-base leading-4 font-medium bg-[#1C336c] rounded-lg">
+          Wszystkie
+        </button>
+      </div>
+      <div className="flex justify-between p-4 border-y border-t-gray-200 border-b-gray-200">
+        <div className="flex gap-4">
+          <img src={EnglandFlag} alt="Flag of England" />
+          <p className="font-medium text-xl leading-5">
+            Anglia: Premier League
+          </p>
+        </div>
+        <Link to="/standings">
+          <div className="flex gap-1">
+            <p className="font-medium text-base leading-4">Tabela</p>
+            <img src={ArrowRight} alt="Right arrow" />
+          </div>
+        </Link>
+      </div>
+    </div>
+  )
 }
 
 export default Home
