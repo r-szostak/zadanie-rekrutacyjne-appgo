@@ -1,6 +1,6 @@
-import { MatchInfo } from "../types"
-import Monitor from "../assets/monitor.png"
-import ArrowRight from "../assets/arrow-right-circle.png"
+import { MatchInfo } from "../../types"
+import Monitor from "../../assets/monitor.png"
+import ArrowRight from "../../assets/arrow-right-circle.png"
 interface MatchDetailsProps {
   details: MatchInfo
 }

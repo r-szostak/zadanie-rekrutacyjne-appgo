@@ -1,44 +1,21 @@
-import { useEffect, useState } from "react"
-import { StandingsInfo } from "../types"
-import ChevronRight from "../assets/chevron-right.png"
-import EnglandFlag from "../assets/england-flag.png"
+import ChevronRight from "../../assets/chevron-right.png"
+import EnglandFlag from "../../assets/england-flag.png"
 import { Link } from "react-router-dom"
-import ArrowRight from "../assets/arrow-right-circle.png"
+import ArrowRight from "../../assets/arrow-right-circle.png"
+import Tableheader from "./Tableheader"
+import useStandingData from "../../hooks/useStandingsData"
 
 const Standings = () => {
-  const [standings, setStandings] = useState<StandingsInfo[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://php74.appgo.pl/sport_api/api/public/api/table"
-        )
-
-        const data = await response.json()
-
-        setStandings(data)
-        setIsLoading(false)
-      } catch (error) {
-        setIsLoading(false)
-        throw new Error("Error fetching data.")
-      }
-    }
-
-    fetchData()
-  }, [])
+  const { isLoading, standings } = useStandingData()
 
   const getPositionBackgroundColor = (index: number) => {
-    if (index + 1 < 5) {
-      return "bg-[#1C336C]"
-    } else if (index + 1 < 6) {
-      return "bg-[#C82D2D]"
-    } else if (index + 1 < 18) {
-      return "bg-[#a7a7a7]"
-    } else {
-      return "bg-[#ff5f5f]"
-    }
+    return index + 1 < 5
+      ? "bg-[#1C336C]"
+      : index + 1 < 6
+      ? "bg-[#C82D2D]"
+      : index + 1 < 18
+      ? "bg-[#a7a7a7]"
+      : "bg-[#ff5f5f]"
   }
 
   return (
@@ -75,48 +52,7 @@ const Standings = () => {
             </div>
             <div className="pt-4 px-4">
               <table className=" text-xs  text-left w-full ">
-                <thead className="text-xs leading-3 uppercase font-medium bg-[#EAEBED] py-2 px-4 w-full">
-                  <tr>
-                    <th
-                      scope="col"
-                      className=" rounded-l text-xs leading-3 uppercase font-medium py-2 pl-4"
-                    >
-                      LP.
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-xs leading-3 uppercase font-medium"
-                    >
-                      Drużyna
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-xs leading-3 uppercase font-medium text-center"
-                    >
-                      M
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-xs leading-3 uppercase font-medium text-center"
-                    >
-                      B
-                    </th>
-
-                    <th
-                      scope="col"
-                      className="text-xs leading-3 uppercase font-medium text-center"
-                    >
-                      RB
-                    </th>
-
-                    <th
-                      scope="col"
-                      className="text-xs leading-3 uppercase font-medium rounded-r pr-4 text-right"
-                    >
-                      P
-                    </th>
-                  </tr>
-                </thead>
+                <Tableheader />
                 <tbody>
                   {standings.map((position, index) => (
                     <>

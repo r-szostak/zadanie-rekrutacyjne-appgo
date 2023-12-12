@@ -1,43 +1,17 @@
-import { useEffect, useState } from "react"
-import { MatchInfo } from "../types"
-import EnglandFlag from "../assets/england-flag.png"
+import { useState } from "react"
+import { MatchInfo } from "../../types"
+import EnglandFlag from "../../assets/england-flag.png"
 import { Link } from "react-router-dom"
-import ArrowRight from "../assets/arrow-right-circle.png"
+import ArrowRight from "../../assets/arrow-right-circle.png"
 import RoundDetails from "./RoundDetails"
-import ChevronLeft from "../assets/chevron-left-orange.png"
-import ChevronRight from "../assets/chevron-right-orange.png"
+import ChevronLeft from "../../assets/chevron-left-orange.png"
+import ChevronRight from "../../assets/chevron-right-orange.png"
+import useMatchesData from "../../hooks/useMatchesData"
 
 const Home = () => {
-  const [matches, setMatches] = useState<MatchInfo[]>([])
-  const [isLoading, setIsLoading] = useState(true)
   const [page, setPage] = useState(1)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://php74.appgo.pl/sport_api/api/public/api/games?page=${page}&onPage=15&orderDirection=desc&orderBy=round`
-        )
-
-        const data = await response.json()
-
-        const sortedMatches = data.data.sort((a: MatchInfo, b: MatchInfo) => {
-          const dateA = new Date(a.date).getTime()
-          const dateB = new Date(b.date).getTime()
-
-          return dateA - dateB
-        })
-
-        setMatches(sortedMatches)
-        setIsLoading(false)
-      } catch (error) {
-        setIsLoading(false)
-        throw new Error("Error fetching data.")
-      }
-    }
-
-    fetchData()
-  }, [page])
+  const { isLoading, matches } = useMatchesData(page)
 
   const getMatchesByGroup = (matches: MatchInfo[]) => {
     const groupedMatches: Record<number, MatchInfo[]> = {}

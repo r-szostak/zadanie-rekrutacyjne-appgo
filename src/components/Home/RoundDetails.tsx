@@ -1,4 +1,4 @@
-import { MatchInfo } from "../types"
+import { MatchInfo } from "../../types"
 import MatchDetails from "./MatchDetails"
 
 interface RoundDetailsProps {
