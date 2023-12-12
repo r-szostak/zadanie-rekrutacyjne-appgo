@@ -3,6 +3,7 @@ import { MatchInfo } from "../types"
 import EnglandFlag from "../assets/england-flag.png"
 import { Link } from "react-router-dom"
 import ArrowRight from "../assets/arrow-right-circle.png"
+import RoundDetails from "./RoundDetails"
 
 const Home = () => {
   const [matches, setMatches] = useState<MatchInfo[]>([])
@@ -55,8 +56,12 @@ const Home = () => {
           </div>
         </Link>
       </div>
-      {Object.keys(groupedMatches).map((roundNumber) => (
-        <p>{roundNumber}</p>
+      {Object.keys(groupedMatches).map((roundNumber, index) => (
+        <RoundDetails
+          key={index}
+          roundNumber={parseInt(roundNumber, 10)}
+          details={groupedMatches[parseInt(roundNumber, 10)]}
+        />
       ))}
     </div>
   )
